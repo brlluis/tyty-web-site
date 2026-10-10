@@ -1,0 +1,532 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Tons atualizados para o novo exemplar (um dourado mais pêssego/cobre elegante) */
+  --gold: #c89574;
+  --gold-hover: #b07e5e;
+  --gold-dim: rgba(200, 149, 116, 0.3);
+  
+  --bg-nav: rgba(20, 20, 22, 0.95);
+  --bg-dark: #121212; 
+  --bg-light: #ffffff; /* Fundo branco limpo, como no novo exemplar */
+  --bg-alt: #f7f5f2; /* Fundo bege muito suave para contraste */
+  
+  --text-light: #ffffff;
+  --text-muted: #888888;
+  --text-dark: #1a1a1a;
+  --text-body-dark: #4a4a4a;
+  
+  --font-serif: 'Playfair Display', serif; /* O novo exemplar usa serifas mais arredondadas e clássicas no título */
+  --font-sans: 'Montserrat', sans-serif;
+
+  --ease-lux: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 18px; /* Aumentar o tamanho base de tudo (1 rem = 18px em vez de 16px) */
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-light);
+  color: var(--text-body-dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  max-width: 1600px; /* Expandido para monitores largos (4K) */
+  margin: 0 auto;
+  padding: 0 4%;
+  width: 100%;
+}
+
+/* ==========================================================================
+   ANIMAÇÕES & INTERATIVIDADE (SCROLL REVEAL)
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1.2s var(--ease-lux), transform 1.2s var(--ease-lux);
+  will-change: opacity, transform;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 0.15s; }
+.delay-2 { transition-delay: 0.3s; }
+.delay-3 { transition-delay: 0.45s; }
+
+/* ==========================================================================
+   HEADER / NAV
+   ========================================================================== */
+.site-header {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+  background-color: transparent;
+  padding: 3rem 0; /* Mais espaçamento no topo */
+  transition: background-color 0.6s var(--ease-lux), padding 0.6s var(--ease-lux), box-shadow 0.6s var(--ease-lux);
+}
+
+.site-header.scrolled {
+  position: fixed;
+  background-color: var(--bg-nav);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1.5rem 0;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.4s var(--ease-lux);
+}
+
+.logo:hover {
+  transform: scale(1.02);
+}
+
+.logo-icon {
+  color: var(--gold);
+  width: 50px; 
+  height: 50px; 
+}
+
+.logo-text {
+  font-family: var(--font-serif);
+  color: #fff;
+  font-size: 2.2rem; 
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.logo-text span {
+  color: var(--gold);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 3.5rem; 
+}
+
+.nav-links a {
+  font-size: 1.1rem; 
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--gold);
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-static-img {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.hero-video {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 2;
+  transition: opacity 1.5s var(--ease-lux);
+}
+
+.hero-video.fade-out {
+  opacity: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(90deg, rgba(10, 10, 12, 0.95) 0%, rgba(10, 10, 12, 0.5) 50%, rgba(10, 10, 12, 0.1) 100%);
+  z-index: 3;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 4;
+  max-width: 900px; 
+  padding-top: 5rem;
+  text-align: left; 
+  width: 100%;
+}
+
+.hero-tag {
+  font-family: var(--font-sans);
+  font-size: 1.1rem; 
+  color: var(--gold);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: block;
+  font-weight: 600;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 6vw, 7rem); /* Fica gigante em monitores 4K */
+  line-height: 1.1;
+  color: #fff;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.hero-desc {
+  font-family: var(--font-sans);
+  font-size: 1.2rem; /* Aumentado */
+  color: rgba(255,255,255,0.8);
+  line-height: 1.8;
+  margin-bottom: 3.5rem;
+  font-weight: 400;
+  max-width: 90%;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: flex-start;
+}
+
+/* Info Bar Fixa na Base do Hero */
+.hero-contact-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(15, 15, 17, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 10;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.hero-contact-inner {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #ccc;
+  font-size: 1rem; /* Aumentado */
+  font-weight: 500;
+}
+
+.contact-item svg {
+  color: var(--gold);
+  width: 24px; /* Aumentado */
+  height: 24px; /* Aumentado */
+}
+
+.contact-divider {
+  width: 1px;
+  background-color: rgba(255,255,255,0.1);
+}
+
+/* ==========================================================================
+   BOTÕES 
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem 3rem; /* Aumentado */
+  font-family: var(--font-sans);
+  font-size: 1rem; /* Aumentado */
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.4s var(--ease-lux), box-shadow 0.4s var(--ease-lux), background-color 0.3s, color 0.3s;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-gold {
+  background-color: var(--gold);
+  color: #fff;
+  border: 1px solid var(--gold);
+}
+
+.btn-gold:hover {
+  background-color: var(--gold-hover);
+  border-color: var(--gold-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(200, 149, 116, 0.2);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn-outline:hover {
+  border-color: #fff;
+  background-color: #fff;
+  color: #111;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   SECÇÃO DE CONTEÚDO BRANCA (WHO WE ARE / SERVIÇOS)
+   ========================================================================== */
+.services {
+  background-color: var(--bg-light);
+  padding: 8rem 0;
+  position: relative;
+}
+
+.section-header {
+  text-align: left;
+  margin-bottom: 5rem;
+  max-width: 600px;
+}
+
+.section-tag {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  color: var(--text-dark);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5rem;
+}
+
+.service-card {
+  background-color: #fff;
+  padding: 3rem;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+  transition: transform 0.5s var(--ease-lux), box-shadow 0.5s var(--ease-lux);
+  border-top: 3px solid transparent;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+  border-top: 3px solid var(--gold);
+}
+
+.service-card .s-icon {
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+
+.service-card .s-title {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.service-card .s-desc {
+  font-size: 0.95rem;
+  color: var(--text-body-dark);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+/* ==========================================================================
+   SECÇÃO ADVOGADO (COM FUNDO ALTERNATIVO CLARO)
+   ========================================================================== */
+.about-section {
+  background-color: var(--bg-alt);
+  padding: 8rem 0;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.about-text .l-title {
+  font-family: var(--font-serif);
+  font-size: 2.8rem;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+
+.about-text .l-desc {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-body-dark);
+  margin-bottom: 2rem;
+}
+
+.framed-img-container {
+  position: relative;
+  width: 100%;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.framed-img-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 1.5s var(--ease-lux);
+}
+
+.framed-img-container:hover img {
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   FOOTER (Simples e Elegante)
+   ========================================================================== */
+.footer {
+  background-color: var(--bg-dark);
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #888;
+}
+
+.footer-logo {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.footer-logo span { color: var(--gold); }
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .hero-title { font-size: 3.5rem; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .about-grid { grid-template-columns: 1fr; gap: 4rem; }
+  .hero-contact-inner { flex-direction: column; gap: 1rem; text-align: center; }
+  .contact-divider { display: none; }
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero-title { font-size: 2.5rem; }
+  .hero-buttons { flex-direction: column; }
+  .services-grid { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   BOTÃO WHATSAPP FLUTUANTE
+   ========================================================================== */
+.whatsapp-float {
+  position: fixed;
+  width: 65px;
+  height: 65px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #25D366;
+  color: #FFF;
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s var(--ease-lux), box-shadow 0.3s var(--ease-lux);
+  animation: pulse-wa 2.5s infinite;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1) translateY(-5px);
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.6);
+  color: #fff;
+}
+
+@keyframes pulse-wa {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+  70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+@media (max-width: 768px) {
+  .whatsapp-float {
+    width: 55px;
+    height: 55px;
+    bottom: 20px;
+    right: 20px;
+  }
+  .whatsapp-float svg {
+    width: 28px;
+    height: 28px;
+  }
+}
